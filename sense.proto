@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protos";
+
+package sense;
+
+// The greeting service definition.
+service Sensor {
+  // Sends a greeting
+  rpc SayHello (SenseRequest) returns (SenseReply);
+}
+
+// The request message containing the user's name.
+message SenseRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message SenseReply {
+  string message = 1;
+}
