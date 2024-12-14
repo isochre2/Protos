@@ -7,15 +7,17 @@ package sense;
 // The greeting service definition.
 service Sensor {
   // Sends a greeting
-  rpc SayHello (SenseRequest) returns (SenseReply);
+  rpc GetLinePower (PowerSensingRequest) returns (PowerSensingReply);
 }
 
 // The request message containing the user's name.
-message SenseRequest {
-  string name = 1;
+message PowerSensingRequest {
+  string line = 1;
 }
 
 // The response message containing the greetings.
-message SenseReply {
-  string message = 1;
+message PowerSensingReply {
+  string power = 1;
+  string voltage = 2;
+  string current = 3;
 }
