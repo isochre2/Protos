@@ -18,6 +18,6 @@ message PowerSensingRequest {
 // The response message containing the greetings.
 message PowerSensingReply {
   double power = 1;
-  string voltage = 2;
-  string current = 3;
+  double voltage = 2;
+  double current = 3;
 }
