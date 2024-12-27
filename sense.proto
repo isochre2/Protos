@@ -8,6 +8,7 @@ package sense;
 service Sensor {
   // Sends a greeting
   rpc GetLinePower (PowerSensingRequest) returns (PowerSensingReply);
+  rpc GetEnergyStats (EnergyStatsRequest) returns (EnergyStatsReply);
 }
 
 // The request message containing the user's name.
@@ -20,4 +21,16 @@ message PowerSensingReply {
   double power = 1;
   double voltage = 2;
   double current = 3;
+}
+
+// The request message containing the user's name.
+message EnergyStatsRequest {
+  //string line = 1;
+}
+
+// The response message containing the greetings.
+message EnergyStatsReply {
+  double totalLastHourEnergy = 1;
+  double totalLastMonthEnergy = 2;
+  double totalEnergyEver = 3;
 }
