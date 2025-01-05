@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protos";
+
+package control;
+
+// The greeting service definition.
+service Control {
+  // Sends a greeting
+  rpc GetValveState (ValveStateRequest) returns (ValveStateReply);
+  rpc GetWaterState (WaterStateRequest) returns (WaterStateReply);
+}
+
+// The request message containing the user's name.
+message ValveStateRequest {
+  //string line = 1;
+}
+
+// The response message containing the greetings.
+message WaterStateReply {
+  //double power = 1;
+  //double voltage = 2;
+  //double current = 3;
+}
+
+// The request message containing the user's name.
+message WaterStateRequest {
+  //string line = 1;
+}
+
+// The response message containing the greetings.
+message ValveStateReply {
+  //double totalLastHourEnergy = 1;
+  //double totalLastMonthEnergy = 2;
+  //double totalEnergyEver = 3;
+}
