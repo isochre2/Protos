@@ -18,6 +18,8 @@ message ValveStateRequest {
 
 // The response message containing the greetings.
 message WaterStateReply {
+	bool waterUp = 1;
+	bool waterDown = 2;
   //double power = 1;
   //double voltage = 2;
   //double current = 3;
@@ -30,6 +32,10 @@ message WaterStateRequest {
 
 // The response message containing the greetings.
 message ValveStateReply {
+	bool valveUp = 1;
+	bool valveDown = 2;
+	bool valveUpward = 3;
+	bool valveDownward = 4;
   //double totalLastHourEnergy = 1;
   //double totalLastMonthEnergy = 2;
   //double totalEnergyEver = 3;
