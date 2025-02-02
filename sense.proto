@@ -9,6 +9,7 @@ service Sensor {
   // Sends a greeting
   rpc GetLinePower (PowerSensingRequest) returns (PowerSensingReply);
   rpc GetEnergyStats (EnergyStatsRequest) returns (EnergyStatsReply);
+  rpc GetVibrationData (VibrationDataRequest) returns (VibrationDataReply);
 }
 
 // The request message containing the user's name.
@@ -33,4 +34,11 @@ message EnergyStatsReply {
   double totalLastHourEnergy = 1;
   double totalLastMonthEnergy = 2;
   double totalEnergyEver = 3;
+}
+
+message VibrationDataRequest{}
+
+message VibrationDataReply
+{
+	repeated double VibrationValues = 1;
 }
