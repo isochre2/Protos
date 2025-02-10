@@ -10,6 +10,7 @@ service Sensor {
   rpc GetLinePower (PowerSensingRequest) returns (PowerSensingReply);
   rpc GetEnergyStats (EnergyStatsRequest) returns (EnergyStatsReply);
   rpc GetVibrationData (VibrationDataRequest) returns (VibrationDataReply);
+  rpc GetRotationSpeed (RotationSpeedRequest) returns (RotationSpeedReply);
 }
 
 // The request message containing the user's name.
