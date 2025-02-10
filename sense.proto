@@ -42,3 +42,9 @@ message VibrationDataReply
 {
 	repeated double VibrationValues = 1;
 }
+
+message RotationSpeedRequest{}
+
+message RotationSpeedReply{
+	double rotationSpeedRPM = 1;
+}
