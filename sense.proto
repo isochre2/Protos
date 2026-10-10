@@ -11,6 +11,7 @@ service Sensor {
   rpc GetEnergyStats (EnergyStatsRequest) returns (EnergyStatsReply);
   rpc GetVibrationData (VibrationDataRequest) returns (VibrationDataReply);
   rpc GetRotationSpeed (RotationSpeedRequest) returns (RotationSpeedReply);
+  rpc GetVibrationSpectrum (VibrationSpectrumRequest) returns (VibrationSpectrumReply);
 }
 
 // The request message containing the user's name.
@@ -48,4 +49,23 @@ message RotationSpeedRequest{}
 
 message RotationSpeedReply{
 	double rotationSpeedRPM = 1;
+}
+
+message VibrationSpectrumRequest {}
+
+message VibrationSpectrumReply {
+  bool available = 1;                    // faux tant qu'aucune capture n'a réussi
+  int64 timestampUnixMs = 2;             // heure de la capture
+  double rotationSpeedRPM = 3;           // 0 si inconnue
+  double frequencyStepHz = 4;            // écart en Hz entre deux points
+  repeated double amplitudeX = 5;        // m/s², de 0 à 400 Hz
+  repeated double amplitudeY = 6;
+  repeated double amplitudeZ = 7;
+  repeated FrequencyMarker markers = 8;  // repères calculés à partir de la vitesse
+}
+
+message FrequencyMarker {
+  string label = 1;
+  double frequencyHz = 2;
+  bool approximate = 3;                  // vrai pour les repères de la butée
 }
