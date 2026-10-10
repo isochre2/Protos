@@ -13,6 +13,9 @@ service Sensor {
   rpc GetRotationSpeed (RotationSpeedRequest) returns (RotationSpeedReply);
   rpc GetVibrationSpectrum (VibrationSpectrumRequest) returns (VibrationSpectrumReply);
   rpc SetVibrationReference (SetVibrationReferenceRequest) returns (SetVibrationReferenceReply);
+  rpc GetSimulatedSpeed (SimulatedSpeedRequest) returns (SimulatedSpeed);
+  rpc SetSimulatedSpeed (SimulatedSpeed) returns (SimulatedSpeed);
+  rpc ResetConfig (ResetConfigRequest) returns (ResetConfigReply);
 }
 
 // The request message containing the user's name.
@@ -97,3 +100,15 @@ message FrequencyMarker {
   double frequencyHz = 2;
   bool approximate = 3;                  // vrai pour les repères de la butée
 }
+
+// Vitesse de rotation simulée, pour tester sans le moulin (réglée depuis la page Maintenance)
+message SimulatedSpeedRequest {}
+message SimulatedSpeed {
+  bool enabled = 1;               // vrai : la vitesse simulée remplace celle du KY003
+  double rotationSpeedRPM = 2;    // vitesse simulée, en tr/min
+}
+
+// Bouton « Réinitialiser la configuration » : la configuration en service est remplacée par celle
+// par défaut (fichier versionné dans le dépôt PowerMonitorApp)
+message ResetConfigRequest {}
+message ResetConfigReply {}
