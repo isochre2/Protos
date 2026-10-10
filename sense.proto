@@ -12,6 +12,7 @@ service Sensor {
   rpc GetVibrationData (VibrationDataRequest) returns (VibrationDataReply);
   rpc GetRotationSpeed (RotationSpeedRequest) returns (RotationSpeedReply);
   rpc GetVibrationSpectrum (VibrationSpectrumRequest) returns (VibrationSpectrumReply);
+  rpc SetVibrationReference (SetVibrationReferenceRequest) returns (SetVibrationReferenceReply);
 }
 
 // The request message containing the user's name.
@@ -62,6 +63,33 @@ message VibrationSpectrumReply {
   repeated double amplitudeY = 6;
   repeated double amplitudeZ = 7;
   repeated FrequencyMarker markers = 8;  // repères calculés à partir de la vitesse
+  ComparisonStatus status = 9;
+  int32 progress = 10;                   // captures déjà prises (référence ou moyenne)
+  int32 progressTotal = 11;              // captures nécessaires : 10 pour la référence, 5 pour la moyenne
+  int64 referenceTimestampUnixMs = 12;   // date de la référence (0 si aucune)
+  repeated double referenceX = 13;       // référence ramenée à la vitesse actuelle, même pas que amplitudeX
+  repeated double referenceY = 14;
+  repeated double referenceZ = 15;
+  repeated Anomaly anomalies = 16;       // nouvelles fréquences (vide sauf si ANOMALY)
+}
+
+// Bouton « Définir comme référence » : lance la moyenne des 10 captures suivantes
+message SetVibrationReferenceRequest {}
+message SetVibrationReferenceReply {}
+
+// Où en est la comparaison avec la référence
+enum ComparisonStatus {
+  NO_REFERENCE = 0;          // aucune référence enregistrée
+  RECORDING_REFERENCE = 1;   // enregistrement en cours (progress / progressTotal)
+  SPEED_INCOMPATIBLE = 2;    // vitesse inconnue ou à plus de 5 % de celle de la référence
+  COLLECTING = 3;            // vitesse compatible, moyenne des captures en cours (progress / progressTotal)
+  NORMAL = 4;                // comparaison faite : aucune nouvelle fréquence
+  ANOMALY = 5;               // comparaison faite : au moins une nouvelle fréquence
+}
+
+message Anomaly {
+  double frequencyHz = 1;
+  string label = 2;                      // texte de l'info-bulle, ex. « 205 Hz ≈ passage rouleaux »
 }
 
 message FrequencyMarker {
