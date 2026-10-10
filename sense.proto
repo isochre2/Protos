@@ -65,7 +65,6 @@ message VibrationSpectrumReply {
   repeated double amplitudeX = 5;        // m/s², de 0 à 400 Hz
   repeated double amplitudeY = 6;
   repeated double amplitudeZ = 7;
-  repeated FrequencyMarker markers = 8;  // repères calculés à partir de la vitesse
   ComparisonStatus status = 9;
   int32 progress = 10;                   // captures déjà prises (référence ou moyenne)
   int32 progressTotal = 11;              // captures nécessaires : 10 pour la référence, 5 pour la moyenne
@@ -73,7 +72,8 @@ message VibrationSpectrumReply {
   repeated double referenceX = 13;       // référence ramenée à la vitesse actuelle, même pas que amplitudeX
   repeated double referenceY = 14;
   repeated double referenceZ = 15;
-  repeated Anomaly anomalies = 16;       // nouvelles fréquences (vide sauf si ANOMALY)
+  repeated double newFrequenciesHz = 17; // nouvelles fréquences, en Hz (vide sauf si ANOMALY)
+  reserved 8, 16;                        // anciens repères et anomalies avec texte d'info-bulle, retirés
 }
 
 // Bouton « Définir comme référence » : lance la moyenne des 10 captures suivantes
@@ -88,17 +88,6 @@ enum ComparisonStatus {
   COLLECTING = 3;            // vitesse compatible, moyenne des captures en cours (progress / progressTotal)
   NORMAL = 4;                // comparaison faite : aucune nouvelle fréquence
   ANOMALY = 5;               // comparaison faite : au moins une nouvelle fréquence
-}
-
-message Anomaly {
-  double frequencyHz = 1;
-  string label = 2;                      // texte de l'info-bulle, ex. « 205 Hz ≈ passage rouleaux »
-}
-
-message FrequencyMarker {
-  string label = 1;
-  double frequencyHz = 2;
-  bool approximate = 3;                  // vrai pour les repères de la butée
 }
 
 // Vitesse de rotation simulée, pour tester sans le moulin (réglée depuis la page Maintenance)
